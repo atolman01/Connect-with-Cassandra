@@ -63,7 +63,7 @@ import data_generator
 # create authprovider object to connect to cassandra
 #       - ask for username and password
 #       - pass username and password to the PlainTextAuthProvider function as arguments
-# the Cassandra cluster's contact point is 137.45.192.237
+# the Cassandra cluster's contact point is ###.###.###.###
 # create a cluster object
 #       - pass authprovider object as an argument
 # create a session object to connect to cluster to perform queries
@@ -77,8 +77,8 @@ def get_session():
     authprovider = PlainTextAuthProvider(username=cass_username, password=cass_password)
     cluster = Cluster(contact_points=['CASS-SERVER IP ADDRESS'], port=9042, auth_provider=authprovider)
 
-    # OR use the session.set_keyspace('ks03')
-    # OR use session.execute('USE ks03')
+    # OR use the session.set_keyspace('TABLESPACE')
+    # OR use session.execute('USE TABLESPACE')
     session = cluster.connect('TABLESPACE')
     return session
 

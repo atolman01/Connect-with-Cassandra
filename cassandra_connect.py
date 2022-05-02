@@ -31,24 +31,24 @@
 #####                                                                                         #####
 #####      b. Change permissions of the all files using chmod: chmod 744 filename.csv         #####
 #####                                                                                         #####
-#####      c. SCP all CSVs to ITEC-CASS07: scp username@itec-cass07                           #####
+#####      c. SCP all CSVs to cass-server: scp username@cass-server                           #####
 #####                                                                                         #####
-#####  5. SSH to ITEC-CASS07: ssh username@itec-cass07                                        #####
+#####  5. SSH to cass-server : ssh username@cass-server                                       #####
 #####                                                                                         #####
 #####  6. Go into the Cassandra shell: cqlsh -u username                                      #####
 #####                                                                                         #####
 #####  7. Run the copy command for all four CSVs                                              #####
 #####                                                                                         #####
-#####      a. copy ks03.citizenbycid(cid,fname,lname,dob,status)                              #####
+#####      a. copy tbspace.citizenbycid(cid,fname,lname,dob,status)                           #####
 #####              from 'citizenbycid.csv' with delimiter=',';                                #####
 #####                                                                                         #####
-#####      b. copy ks03.citizenbyphone(phone,primarycid)                                      #####
+#####      b. copy tbspace.citizenbyphone(phone,primarycid)                                   #####
 #####              from 'citizenbyphone.csv' with delimiter=',';                              #####
 #####                                                                                         #####
-#####      c. copy ks03.misusealerts(misusedate,cid,misusetime,address,city,state,zip)        #####
+#####      c. copy tbspace.misusealerts(misusedate,cid,misusetime,address,city,state,zip)     #####
 #####              from 'misusealerts.csv' with delimiter=',';                                #####
 #####                                                                                         #####
-#####      d. copy ks03.pvcardusesbycid(cid,usenum,usedate,usetime,city,state,zip)            #####
+#####      d. copy tbspace.pvcardusesbycid(cid,usenum,usedate,usetime,city,state,zip)         #####
 #####              from 'pvcarduses.csv' with delimiter=',';                                  #####
 #####                                                                                         #####
 ###################################################################################################
@@ -75,11 +75,11 @@ def get_session():
     cass_password = getpass.getpass("Cassandra Password: ")
 
     authprovider = PlainTextAuthProvider(username=cass_username, password=cass_password)
-    cluster = Cluster(contact_points=['137.45.192.237'], port=9042, auth_provider=authprovider)
+    cluster = Cluster(contact_points=['CASS-SERVER IP ADDRESS'], port=9042, auth_provider=authprovider)
 
     # OR use the session.set_keyspace('ks03')
     # OR use session.execute('USE ks03')
-    session = cluster.connect('ks03')
+    session = cluster.connect('TABLESPACE')
     return session
 
 # ask_num_of_rows() -> int
